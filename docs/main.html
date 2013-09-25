@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Welcome to Corona!</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h1">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1>Welcome to Corona!</h1>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="keyword">local</span> screenWidth = display.contentWidth
+<span class="keyword">local</span> screenHeight = display.contentHeight</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Corona has a Storyboard library that we can use to load different levels of
+our games at different times.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">local</span> storyboard = <span class="built_in">require</span>(<span class="string">"storyboard"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Pre-load the soundtrack. We‘re using three tracks from Anamanaguchi’s Power
+Supply EP.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>media.playSound(<span class="string">"powersupply.mp3"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h2>Down the Rabbit Hole</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>In this first scene we‘ll guide a Skater around the Blue door and into the
+Red door. If the skater passes through the blue door, they’ll go back to the
+starting position, if they pass through the red door. We&#39;ll advance to the
+next level.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>We name the scene “skater” because they are the main character of the scene
+so it&#39;s easy to remember. We could just as easily name the scene “down the
+rabbit hole” or “level1”</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">local</span> down_the_rabbit_hole = storyboard.newScene(<span class="string">"skater"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>This function will be called whenever the scene is first created.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="function"><span class="keyword">function</span> <span class="title">down_the_rabbit_hole:createScene</span><span class="params">(event)</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Sometimes saving even a few keystrokes is worth it. This lets us call the
+view just <code>view</code> instead of `self.view.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">local</span> view = self.view</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Let&#39;s have a nice background</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">local</span> background = display.newRect(<span class="number">0</span>, <span class="number">0</span>, screenWidth, screenHeight)
+  background:setFillColor(<span class="number">32</span>, <span class="number">48</span>, <span class="number">48</span>)
+  view:insert(background)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>The two doors are just different image files that we load. After they&#39;re
+created, set the width and height accordingly.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">local</span> blue_door = display.newImageRect(<span class="string">"blue_door.png"</span>, <span class="number">200</span>, <span class="number">200</span>)
+  blue_door.x, blue_door.y = <span class="number">100</span>, <span class="number">300</span>
+  view:insert(blue_door)
+  <span class="keyword">local</span> red_door = display.newImageRect(<span class="string">"red_door.png"</span>, <span class="number">200</span>, <span class="number">200</span>)
+  red_door.x, red_door.y = <span class="number">500</span>, <span class="number">170</span>
+  view:insert(red_door)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Our skater is the “player character” of this particular scene. We&#39;ll
+control them by dragging them around with our finger.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">local</span> skater = display.newImageRect(<span class="string">"skater.png"</span>, <span class="number">200</span>, <span class="number">200</span>)
+  skater.x = <span class="number">100</span>
+  skater.y =  screenHeight - <span class="number">100</span>
+  view:insert(skater)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Some games are hard because you don‘t know what to do. Our game isn’t meant
+to be hard. It&#39;s just meant to get you excited.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">local</span> message = display.newText(<span class="string">"Take the red door"</span>,
+    screenWidth - <span class="number">250</span>, screenHeight - <span class="number">200</span>,
+    <span class="number">200</span>, <span class="number">500</span>, system.nativeFont, <span class="number">48</span>)
+  view:insert(message)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>We want to know if our skater comes close to either door. To do this,
+we write some methods. Methods are like functions where the first parameter
+is always the table our method belongs to.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">skater:on_red_door</span><span class="params">()</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>When I have a lot of variables, I like to announce them all at once at
+the beginning instead of one by one. Old habits die hard.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">local</span> minX, maxX, minY, maxY, fuzz</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Fuzz is just how accurate we want to make all of these calculations. I
+just picked an arbitrary number that felt good.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    fuzz = <span class="number">50</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>The minimum <em>x</em> value our skater can have to be considered on top of the
+door. It‘s calculated from the door’s position and size with a bit of
+fuzz.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    minX = red_door.x - red_door.width / <span class="number">2</span> + fuzz</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>The maximum <em>x</em> value and <em>y</em> values are calculated in a similar way.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    maxX = red_door.x + red_door.width / <span class="number">2</span> - fuzz
+    minY = red_door.y - red_door.height / <span class="number">2</span> + fuzz
+    maxY = red_door.y + red_door.height / <span class="number">2</span> - fuzz</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>If our skater is within the range of values we calculated, we determine
+that they are “on the door”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">return</span> skater.x &gt;= minX <span class="keyword">and</span> skater.x &lt;= maxX <span class="keyword">and</span> skater.y &gt;= minY <span class="keyword">and</span> skater.y &lt;= maxY
+  <span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>We create a function for the blue door just like the red one. Do you see a
+general <code>on_door</code> method that we could write which takes the door as a
+parameter?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">skater:on_blue_door</span><span class="params">()</span></span>
+    <span class="keyword">local</span> minX, maxX, minY, maxY, fuzz
+    fuzz = <span class="number">20</span>
+    minX = blue_door.x - blue_door.width / <span class="number">2</span> + fuzz
+    maxX = blue_door.x + blue_door.width / <span class="number">2</span> - fuzz
+    minY = blue_door.y - blue_door.height / <span class="number">2</span> + fuzz
+    maxY = blue_door.y + blue_door.height / <span class="number">2</span> - fuzz
+
+    <span class="keyword">return</span> skater.x &gt;= minX <span class="keyword">and</span> skater.x &lt;= maxX <span class="keyword">and</span> skater.y &gt;= minY <span class="keyword">and</span> skater.y &lt;= maxY
+  <span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>It&#39;s perfectly okay to give your functions silly names… as long as what
+the function does is clear. In this case, the function controls the
+movement of our skater as we drag them about.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">skater.moveitmoveit</span><span class="params">(event)</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>The start of a move event. We just touched the skater.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> event.phase == <span class="string">"began"</span> <span class="keyword">then</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>We&#39;ll keep track of whether or not we can still move them.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      skater.on_a_move = <span class="keyword">true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>If this isn&#39;t the start of a touch, we must be dragging the skater some
+where.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">elseif</span> event.phase == <span class="string">"moved"</span> <span class="keyword">and</span> skater.on_a_move <span class="keyword">then</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>As long as we‘re not trying to drag them off the screen, we move the
+skater to wherever we’re currently touching.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> event.x &lt;= screenWidth <span class="keyword">and</span> event.x &gt;= <span class="number">0</span> <span class="keyword">then</span>
+        skater.x = event.x 
+      <span class="keyword">end</span>
+      <span class="keyword">if</span> event.y &lt;= screenHeight <span class="keyword">and</span> event.y &gt;= <span class="number">0</span> <span class="keyword">then</span>
+        skater.y = event.y
+      <span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>If we didn‘t start touching the skater, and we’re not dragging them
+around, we must have lifted up our finger. Time to stop!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">else</span>
+      skater.on_a_move = <span class="keyword">false</span>
+    <span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>As we‘re moving the skater, we want to check if they’re on either door.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>If they&#39;re on the red door, that means we take them to the next level.
+First we reset the skater in case we ever come back</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>If they&#39;re on the red door, that means we take them to the next level.
+First we reset the skater in case we ever come back to this level later.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> skater:on_red_door() <span class="keyword">then</span>
+      skater.x = <span class="number">100</span>
+      skater.y =  screenHeight - <span class="number">100</span>
+      skater.on_a_move = <span class="keyword">false</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Onward to crush bugs!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      storyboard.gotoScene(<span class="string">"bugs"</span>)
+    <span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Why oh why did you take the blue door?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> skater:on_blue_door() <span class="keyword">then</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>It&#39;s fine, just try again!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      skater.x = <span class="number">100</span>
+      skater.y =  screenHeight - <span class="number">100</span>
+      skater.on_a_move = <span class="keyword">false</span>
+      <span class="keyword">local</span> old_text = message.text
+      <span class="keyword">local</span> old_size = message.size
+      message.text = <span class="string">"Have confidence. Take the red door."</span>
+      message.size = <span class="number">32</span>
+      message:setTextColor(<span class="number">128</span>, <span class="number">255</span>, <span class="number">0</span>)
+      timer.performWithDelay(<span class="number">1000</span>, function()
+        message.text = old_text
+        message.size = old_size
+        message:setTextColor(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)
+      <span class="keyword">end</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Now that we&#39;ve defined a function to run every time we touch the skater,
+we have to tell Corona to run it every time we touch the skater. Functions
+like this are called “event listeners” or “event handlers”.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  skater:addEventListener(<span class="string">"touch"</span>, skater.moveitmoveit)
+<span class="keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Lastly, that whole createScene function we defined is an event handler for
+first loading this level.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>down_the_rabbit_hole:addEventListener(<span class="string">"createScene"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap for-h2">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <h2>Bug crushing</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">local</span> ready_to_crush_bugs = storyboard.newScene(<span class="string">"bugs"</span>)
+<span class="function"><span class="keyword">function</span> <span class="title">ready_to_crush_bugs:createScene</span><span class="params">(event)</span></span>
+  <span class="keyword">local</span> view = self.view
+
+  <span class="keyword">local</span> background = display.newRect(<span class="number">0</span>, <span class="number">0</span>, screenWidth, screenHeight)
+  background:setFillColor(<span class="number">212</span>, <span class="number">212</span>, <span class="number">212</span>)
+  view:insert(background)
+
+  <span class="keyword">local</span> bugs = {}
+  <span class="keyword">local</span> squished_bugs = <span class="number">0</span>
+
+  <span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">10</span> <span class="keyword">do</span>
+    <span class="keyword">local</span> bug = display.newImageRect(<span class="string">"beetle.png"</span>, <span class="number">150</span>, <span class="number">150</span>)
+    view:insert(bug)
+    bug.x = <span class="number">200</span>
+    bug.y = <span class="number">100</span>
+    bug.deltaX = <span class="built_in">math</span>.random(-<span class="number">50</span>, <span class="number">50</span>)
+    bug.deltaY = <span class="built_in">math</span>.random(-<span class="number">50</span>, <span class="number">50</span>)
+    <span class="function"><span class="keyword">function</span> <span class="title">bug.squish</span><span class="params">(event)</span></span>
+      <span class="keyword">if</span> event.phase == <span class="string">"began"</span> <span class="keyword">and</span> <span class="keyword">not</span> bug.squished <span class="keyword">then</span>
+        bug.isVisible = <span class="keyword">false</span>
+        bug.squished = display.newImageRect(<span class="string">"squished.png"</span>, <span class="number">150</span>, <span class="number">150</span>)
+                view:insert(bug.squished)
+                bug.squished.x = bug.x
+                bug.squished.y = bug.y
+        squished_bugs = squished_bugs + <span class="number">1</span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    bug:addEventListener(<span class="string">"touch"</span>, bug.squish)
+    bugs[i] = bug
+  <span class="keyword">end</span>
+  <span class="keyword">local</span> message = display.newText(<span class="string">"You'll have to squish bugs!"</span>,
+  <span class="number">50</span>, <span class="number">300</span>, screenWidth, screenHeight, system.nativeFont, <span class="number">72</span>)
+  message:setTextColor(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)
+  view:insert(message)
+
+  <span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">are_all_squished</span><span class="params">()</span></span>
+    <span class="keyword">if</span> squished_bugs == <span class="number">10</span> <span class="keyword">then</span>
+      <span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">10</span> <span class="keyword">do</span>
+        bugs[i].squished = <span class="keyword">nil</span>
+        bugs[i]:setFillColor(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)
+      <span class="keyword">end</span>
+      squished_bugs = <span class="number">0</span>
+      storyboard.gotoScene(<span class="string">"finish"</span>)
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">run_bugs_run</span><span class="params">(event)</span></span>
+    <span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">10</span> <span class="keyword">do</span>
+      <span class="keyword">if</span> <span class="keyword">not</span> bugs[i].squished <span class="keyword">then</span>
+
+        bugs[i].x = bugs[i].x + bugs[i].deltaX
+        bugs[i].y = bugs[i].y + bugs[i].deltaY
+        <span class="keyword">if</span> bugs[i].x &lt; <span class="number">0</span> <span class="keyword">or</span> bugs[i].x &gt; screenWidth <span class="keyword">then</span>
+          bugs[i].deltaX = bugs[i].deltaX * -<span class="number">1</span>
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> bugs[i].y &lt; <span class="number">0</span> <span class="keyword">or</span> bugs[i].y &gt; screenHeight <span class="keyword">then</span>
+          bugs[i].deltaY = bugs[i].deltaY * -<span class="number">1</span>
+        <span class="keyword">end</span>
+
+      <span class="keyword">end</span>
+      are_all_squished()
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+  Runtime:addEventListener(<span class="string">"enterFrame"</span>, run_bugs_run)
+
+  ready_to_crush_bugs:addEventListener(<span class="string">"exitScene"</span>, function()
+    Runtime:removeEventListener(<span class="string">"enterFrame"</span>, run_bugs_run)
+  <span class="keyword">end</span>)
+<span class="keyword">end</span>
+ready_to_crush_bugs:addEventListener(<span class="string">"createScene"</span>)
+
+<span class="keyword">local</span> alright_lets_go = storyboard.newScene(<span class="string">"finish"</span>)
+<span class="function"><span class="keyword">function</span> <span class="title">alright_lets_go:createScene</span><span class="params">(event)</span></span>
+  <span class="keyword">local</span> background = display.newRect(<span class="number">0</span>, <span class="number">0</span>, screenWidth, screenHeight)
+  background:setFillColor(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)
+  <span class="keyword">local</span> text = display.newText(<span class="string">"Alright, let's go! You are lookin' good."</span>,
+    <span class="number">100</span>, <span class="number">100</span>, screenWidth - <span class="number">200</span>, screenHeight - <span class="number">200</span>, native.systemFont, <span class="number">56</span>)
+  text:setReferencePoint(display.TopLeftReferencePoint)
+  text:setTextColor(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)
+
+  timer.performWithDelay(<span class="number">720</span>, function(event)
+    <span class="keyword">local</span> red = <span class="built_in">math</span>.random(<span class="number">0</span>, <span class="number">255</span>)
+    <span class="keyword">local</span> green = <span class="built_in">math</span>.random(<span class="number">0</span>, <span class="number">255</span>)
+    <span class="keyword">local</span> blue = <span class="built_in">math</span>.random(<span class="number">0</span>, <span class="number">255</span>)
+    <span class="keyword">if</span> red + green + blue &lt; <span class="number">255</span> <span class="keyword">then</span>
+      text:setTextColor(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)
+    <span class="keyword">else</span>
+      text:setTextColor(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> <span class="built_in">math</span>.random(<span class="number">0</span>, <span class="number">1</span>) == <span class="number">0</span> <span class="keyword">then</span>
+      text.x = <span class="number">100</span>
+      text.y = <span class="number">700</span>
+    <span class="keyword">else</span>
+      text.x = <span class="number">100</span>
+      text.y = <span class="number">100</span>
+    <span class="keyword">end</span>
+    background:setFillColor(red, green, blue)
+  <span class="keyword">end</span>, <span class="number">0</span>)
+<span class="keyword">end</span>
+alright_lets_go:addEventListener(<span class="string">"createScene"</span>)
+
+
+storyboard.gotoScene(<span class="string">"skater"</span>)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
